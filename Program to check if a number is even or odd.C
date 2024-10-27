@@ -2,18 +2,18 @@
 
 int main()
 {
-    int num1;
+    int number;
 
-    /* Input two numbers from user */
-    printf("Enter the number: ");
-    scanf("%d", &num1);
+    // Prompt the user to enter a number
+    printf("Please enter a number to check if it’s even or odd: ");
+    scanf("%d", &number);
 
-    /* If num1 is maximum */
-    if(num1%2==0)
-    {
-        printf("%d is even", num1);        
+    // Check if the number is even or odd
+    if (number % 2 == 0) {
+        printf("Looks like %d is an even number.\n", number);
+    } else {
+        printf("And %d is an odd number.\n", number);
     }
-    else {
-        printf("%d is odd", num1);
-    }
+
+    return 0;
 }
