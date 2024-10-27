@@ -1,17 +1,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Structure for a linked list node
+// Defining the structure of a linked list node
 struct Node {
     int data;
     struct Node* next;
 };
 
-// Function to create a new node
+// Function to create a new node with provided data
 struct Node* createNode(int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     if (!newNode) {
-        printf("Memory allocation failed\n");
+        printf("Oops! Memory allocation failed.\n");
         exit(1);
     }
     newNode->data = data;
@@ -19,7 +19,7 @@ struct Node* createNode(int data) {
     return newNode;
 }
 
-// Function to insert a node at the end of the linked list
+// Function to add a node at the end of the linked list
 void insertAtEnd(struct Node** head, int data) {
     struct Node* newNode = createNode(data);
     if (*head == NULL) {
@@ -33,10 +33,10 @@ void insertAtEnd(struct Node** head, int data) {
     temp->next = newNode;
 }
 
-// Function to print the linked list
+// Function to display the entire linked list
 void printList(struct Node* node) {
     if (node == NULL) {
-        printf("List is empty\n");
+        printf("The list is currently empty.\n");
         return;
     }
     printf("Linked List: ");
@@ -47,67 +47,67 @@ void printList(struct Node* node) {
     printf("NULL\n");
 }
 
-// Function to reverse a linked list
+// Function to reverse the linked list
 struct Node* reverseList(struct Node* head) {
-    struct Node* prev = NULL;
+    struct Node* previous = NULL;
     struct Node* current = head;
-    struct Node* next = NULL;
+    struct Node* following = NULL;
     while (current != NULL) {
-        next = current->next; // Store next node
-        current->next = prev; // Reverse the link
-        prev = current;       // Move prev one step forward
-        current = next;       // Move current one step forward
+        following = current->next; // Save the next node
+        current->next = previous;  // Flip the link
+        previous = current;        // Move previous forward
+        current = following;       // Move current forward
     }
-    return prev; // New head of the reversed list
+    return previous; // Return the new head of the reversed list
 }
 
 // Function to check if the linked list is a palindrome
 int isPalindrome(struct Node* head) {
     if (head == NULL || head->next == NULL) {
-        return 1; // Empty list or single element list is a palindrome
+        return 1; // An empty or single-element list is always a palindrome
     }
 
-    // Find the middle of the linked list using the fast and slow pointer method
-    struct Node *slow = head, *fast = head;
-    while (fast != NULL && fast->next != NULL) {
-        slow = slow->next;
-        fast = fast->next->next;
+    // Use slow and fast pointers to find the list's midpoint
+    struct Node *slowPtr = head, *fastPtr = head;
+    while (fastPtr != NULL && fastPtr->next != NULL) {
+        slowPtr = slowPtr->next;
+        fastPtr = fastPtr->next->next;
     }
 
     // Reverse the second half of the list
-    struct Node* secondHalf = reverseList(slow);
-    struct Node* firstHalf = head;
+    struct Node* secondHalfStart = reverseList(slowPtr);
+    struct Node* firstHalfStart = head;
 
-    // Compare the first half and the reversed second half
-    while (secondHalf != NULL) {
-        if (firstHalf->data != secondHalf->data) {
+    // Compare the first and the reversed second halves
+    while (secondHalfStart != NULL) {
+        if (firstHalfStart->data != secondHalfStart->data) {
             return 0; // Not a palindrome
         }
-        firstHalf = firstHalf->next;
-        secondHalf = secondHalf->next;
+        firstHalfStart = firstHalfStart->next;
+        secondHalfStart = secondHalfStart->next;
     }
 
-    return 1; // It is a palindrome
+    return 1; // List is a palindrome
 }
 
-// Main function to test if a linked list is a palindrome
+// Main function to demonstrate palindrome checking in a linked list
 int main() {
-    struct Node* head = NULL; // Start with an empty list
+    struct Node* head = NULL; // Starting with an empty list
 
-    // Inserting elements into the linked list
+    // Insert elements into the linked list to test for palindromes
     insertAtEnd(&head, 1);
     insertAtEnd(&head, 2);
     insertAtEnd(&head, 3);
     insertAtEnd(&head, 2);
     insertAtEnd(&head, 1);
 
-    // Print the linked list
+    // Display the linked list
     printf("Original List: ");
     printList(head);
 
     // Check if the linked list is a palindrome
     if (isPalindrome(head)) {
-        printf("The linked list is a palindrome.\n");
+        printf("Good news! The linked list is a palindrome.\n");
     } else {
         printf("The linked list is not a palindrome.\n");
     }
